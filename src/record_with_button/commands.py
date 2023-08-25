@@ -27,11 +27,11 @@ def version_callback(version: bool):
     Print app version and exit
     """
     if version:
-        rprint(f"record_with_button ('record_with_button') Version: {__version__}")
+        rprint(f"record_with_button ('{APP_NAME}') Version: {__version__}")
         raise typer.Exit()
 
 
-@app.callback(help="[bold]record_with_button[/bold] CLI App for [green]PagerDuty[/green]")
+@app.callback(help="[bold]record_with_button[/bold] CLI App")
 def app_options(
     _: bool = typer.Option(
         None,
