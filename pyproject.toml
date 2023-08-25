@@ -15,6 +15,9 @@ record_with_button = "record_with_button.commands:app"
 [tool.poetry.dependencies]
 python = "^3.11"
 typer = {extras = ["all"], version = "^0.7.0"}
+sounddevice = "^0.4.6"
+numpy = "^1.25.2"
+wavio = "^0.0.7"
 
 
 [tool.poetry.group.dev.dependencies]
