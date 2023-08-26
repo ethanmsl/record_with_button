@@ -31,9 +31,6 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="function" href="#test_what_am_i">test_what_am_i</a>
-            </li>
-            <li>
                     <a class="function" href="#test_version_callback">test_version_callback</a>
             </li>
     </ul>
@@ -69,48 +66,17 @@
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">from</span> <span class="nn">record_with_button</span> <span class="kn">import</span> <span class="n">commands</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
 </span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="k">def</span> <span class="nf">test_what_am_i</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Test: Say hello to NAME&quot;&quot;&quot;</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">numeric_intake</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">numeric_intake</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">numeric_intake</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="k">def</span> <span class="nf">test_version_callback</span><span class="p">():</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">    Test error and non-error exit</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">):</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="k">def</span> <span class="nf">test_version_callback</span><span class="p">():</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    Test error and non-error exit</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">):</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 
 
             </section>
-                <section id="test_what_am_i">
-                            <input id="test_what_am_i-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">test_what_am_i</span><span class="signature pdoc-code condensed">(<span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
-
-                <label class="view-source-button" for="test_what_am_i-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#test_what_am_i"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="test_what_am_i-12"><a href="#test_what_am_i-12"><span class="linenos">12</span></a><span class="k">def</span> <span class="nf">test_what_am_i</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="test_what_am_i-13"><a href="#test_what_am_i-13"><span class="linenos">13</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Test: Say hello to NAME&quot;&quot;&quot;</span>
-</span><span id="test_what_am_i-14"><a href="#test_what_am_i-14"><span class="linenos">14</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">numeric_intake</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
-</span><span id="test_what_am_i-15"><a href="#test_what_am_i-15"><span class="linenos">15</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">numeric_intake</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-</span><span id="test_what_am_i-16"><a href="#test_what_am_i-16"><span class="linenos">16</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">numeric_intake</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Test: Say hello to NAME</p>
-</div>
-
-
-                </section>
                 <section id="test_version_callback">
                             <input id="test_version_callback-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -122,13 +88,13 @@
 
     </div>
     <a class="headerlink" href="#test_version_callback"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="test_version_callback-19"><a href="#test_version_callback-19"><span class="linenos">19</span></a><span class="k">def</span> <span class="nf">test_version_callback</span><span class="p">():</span>
-</span><span id="test_version_callback-20"><a href="#test_version_callback-20"><span class="linenos">20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="test_version_callback-21"><a href="#test_version_callback-21"><span class="linenos">21</span></a><span class="sd">    Test error and non-error exit</span>
-</span><span id="test_version_callback-22"><a href="#test_version_callback-22"><span class="linenos">22</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="test_version_callback-23"><a href="#test_version_callback-23"><span class="linenos">23</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
-</span><span id="test_version_callback-24"><a href="#test_version_callback-24"><span class="linenos">24</span></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">):</span>
-</span><span id="test_version_callback-25"><a href="#test_version_callback-25"><span class="linenos">25</span></a>        <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="test_version_callback-12"><a href="#test_version_callback-12"><span class="linenos">12</span></a><span class="k">def</span> <span class="nf">test_version_callback</span><span class="p">():</span>
+</span><span id="test_version_callback-13"><a href="#test_version_callback-13"><span class="linenos">13</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="test_version_callback-14"><a href="#test_version_callback-14"><span class="linenos">14</span></a><span class="sd">    Test error and non-error exit</span>
+</span><span id="test_version_callback-15"><a href="#test_version_callback-15"><span class="linenos">15</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="test_version_callback-16"><a href="#test_version_callback-16"><span class="linenos">16</span></a>    <span class="k">assert</span> <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+</span><span id="test_version_callback-17"><a href="#test_version_callback-17"><span class="linenos">17</span></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">):</span>
+</span><span id="test_version_callback-18"><a href="#test_version_callback-18"><span class="linenos">18</span></a>        <span class="n">commands</span><span class="o">.</span><span class="n">version_callback</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 
 

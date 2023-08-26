@@ -37,22 +37,10 @@
                     <a class="function" href="#app_options">app_options</a>
             </li>
             <li>
-                    <a class="function" href="#what_am_i">what_am_i</a>
+                    <a class="function" href="#info">info</a>
             </li>
             <li>
-                    <a class="function" href="#pword">pword</a>
-            </li>
-            <li>
-                    <a class="function" href="#adding_tags">adding_tags</a>
-            </li>
-            <li>
-                    <a class="function" href="#spin">spin</a>
-            </li>
-            <li>
-                    <a class="function" href="#progbar">progbar</a>
-            </li>
-            <li>
-                    <a class="function" href="#numeric_intake">numeric_intake</a>
+                    <a class="function" href="#record_audio_until_button_pushed">record_audio_until_button_pushed</a>
             </li>
     </ul>
 
@@ -86,163 +74,124 @@ the typer framework and decorators.</p>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span> <span class="nn">time</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">metadata</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">import</span> <span class="nn">typer</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span> <span class="k">as</span> <span class="n">rprint</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">Progress</span><span class="p">,</span> <span class="n">SpinnerColumn</span><span class="p">,</span> <span class="n">TextColumn</span><span class="p">,</span> <span class="n">track</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="kn">from</span> <span class="nn">rich.prompt</span> <span class="kn">import</span> <span class="n">Prompt</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="vm">__name__</span> <span class="k">as</span> <span class="n">APP_NAME</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="c1"># generage CLI app object</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">rich_markup_mode</span><span class="o">=</span><span class="s2">&quot;rich&quot;</span><span class="p">,</span> <span class="n">add_completion</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="c1"># get version from pyproject.toml</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">metadata</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="kn">import</span> <span class="nn">sounddevice</span> <span class="k">as</span> <span class="nn">sd</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="kn">import</span> <span class="nn">typer</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="kn">import</span> <span class="nn">wavio</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span> <span class="k">as</span> <span class="n">rprint</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">Progress</span><span class="p">,</span> <span class="n">SpinnerColumn</span><span class="p">,</span> <span class="n">TextColumn</span><span class="p">,</span> <span class="n">track</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>
+</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="vm">__name__</span> <span class="k">as</span> <span class="n">APP_NAME</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="c1"># generage CLI app object</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">rich_markup_mode</span><span class="o">=</span><span class="s2">&quot;rich&quot;</span><span class="p">,</span> <span class="n">add_completion</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>
-</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="k">def</span> <span class="nf">version_callback</span><span class="p">(</span><span class="n">version</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a><span class="sd">    Print app version and exit</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>    <span class="k">if</span> <span class="n">version</span><span class="p">:</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;record_with_button (&#39;</span><span class="si">{</span><span class="n">APP_NAME</span><span class="si">}</span><span class="s2">&#39;) Version: </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">()</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="c1"># get version from pyproject.toml</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>
+</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="c1">##################################################################################</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a><span class="c1"># Boilerplate</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a><span class="c1">##################################################################################</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>
 </span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a>
-</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>
-</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;[bold]record_with_button[/bold] CLI App&quot;</span><span class="p">)</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="k">def</span> <span class="nf">app_options</span><span class="p">(</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>    <span class="n">_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>        <span class="kc">None</span><span class="p">,</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show version of this app&quot;</span><span class="p">,</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>        <span class="n">callback</span><span class="o">=</span><span class="n">version_callback</span><span class="p">,</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>        <span class="n">is_eager</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>    <span class="p">)</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="p">):</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">    This callback is called by the **base app** itself.</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="sd">    Sub-callbacks are used by the options to perform actions.</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">    The eager sub-callback allows us to circumvent typer&#39;s expectation that a regular</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="sd">    command is still comming.</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">    (Side Note: Yes, I agree this is slightly awkward for something as standard as</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">    `--version`, but it does seem to be the best way to do it in this framework.)</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="c1">##################################################################################</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="c1"># Regular &#39;ol Commands</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="c1">##################################################################################</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Prompted&quot;</span><span class="p">)</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="k">def</span> <span class="nf">what_am_i</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Share your name -- get a fun fact.&quot;&quot;&quot;</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>        <span class="n">name_out</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Prompt</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="s2">&quot;Enter your name, plz :sunglasses:&quot;</span><span class="p">)</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>        <span class="n">name_out</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a><span class="k">def</span> <span class="nf">version_callback</span><span class="p">(</span><span class="n">version</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="sd">    Print app version and exit</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>    <span class="k">if</span> <span class="n">version</span><span class="p">:</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;record_with_button (&#39;</span><span class="si">{</span><span class="n">APP_NAME</span><span class="si">}</span><span class="s2">&#39;) Version: </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">()</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;[bold]record_with_button[/bold] CLI App&quot;</span><span class="p">)</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="k">def</span> <span class="nf">app_options</span><span class="p">(</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="n">_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>        <span class="kc">None</span><span class="p">,</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show version of this app&quot;</span><span class="p">,</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>        <span class="n">callback</span><span class="o">=</span><span class="n">version_callback</span><span class="p">,</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>        <span class="n">is_eager</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="p">)</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="p">):</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">    This callback is called by the **base app** itself.</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="sd">    Sub-callbacks are used by the options to perform actions.</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="sd">    The eager sub-callback allows us to circumvent typer&#39;s expectation that a regular</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="sd">    command is still comming.</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="sd">    (Side Note: Yes, I agree this is slightly awkward for something as standard as</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="sd">    `--version`, but it does seem to be the best way to do it in this framework.)</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="c1">##################################################################################</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a><span class="c1"># Regular &#39;ol Commands</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="c1">##################################################################################</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">What, </span><span class="si">{</span><span class="n">name_out</span><span class="si">}</span><span class="s2">, are you?&quot;</span><span class="p">)</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>    <span class="c1"># example of using rich-print&#39;s MarkUp</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="n">rprint</span><span class="p">(</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>        <span class="sa">f</span><span class="s2">&quot;[green]Why you are [bold red]loved[/bold red][/green] </span><span class="se">\</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="s2">[blue]</span><span class="si">{</span><span class="n">name_out</span><span class="si">}</span><span class="s2">[/blue][green]![/green] :heart:&quot;</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="p">)</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Prompted&quot;</span><span class="p">)</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="k">def</span> <span class="nf">pword</span><span class="p">(</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="n">_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>        <span class="o">...</span><span class="p">,</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>        <span class="s2">&quot;--hidden-input-string&quot;</span><span class="p">,</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>        <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>        <span class="n">confirmation_prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>        <span class="n">hide_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="p">),</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="c1"># NOTE: we would NOT want this as it allows explicit flag calling and regular</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="c1">#       code inputing</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="p">):</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Example use of \&quot;hide_input\&quot; true.&quot;&quot;&quot;</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="n">rprint</span><span class="p">(</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>        <span class="sa">f</span><span class="s2">&quot;Hello [blue]</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">[/blue]. Doing something very secure :lock: with password.&quot;</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>    <span class="p">)</span>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Prompted&quot;</span><span class="p">)</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="k">def</span> <span class="nf">adding_tags</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Example of using rich&#39;s prompt to add tags to a ticket&quot;&quot;&quot;</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="n">tag</span> <span class="o">=</span> <span class="n">Prompt</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="s2">&quot;Enter a tag, or [bold red]q[/bold red] to quit&quot;</span><span class="p">)</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>            <span class="k">break</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>    <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tags: </span><span class="si">{</span><span class="n">tags</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="c1">##################################################################################</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="c1"># Visual Widgets</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="c1">##################################################################################</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Visual&quot;</span><span class="p">)</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="k">def</span> <span class="nf">spin</span><span class="p">(</span><span class="n">seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">36</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Spinners for the unknowably long and asynchronous.&quot;&quot;&quot;</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>    <span class="k">with</span> <span class="n">Progress</span><span class="p">(</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>        <span class="n">SpinnerColumn</span><span class="p">(),</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>        <span class="n">TextColumn</span><span class="p">(</span><span class="s2">&quot;[progress.description]</span><span class="si">{task.description}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">),</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>        <span class="n">transient</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>        <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;Task A...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">seconds</span><span class="p">)</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>        <span class="n">task</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;Task B...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">seconds</span><span class="p">)</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>            <span class="n">progress</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Visual&quot;</span><span class="p">)</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="k">def</span> <span class="nf">progbar</span><span class="p">(</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>    <span class="n">seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span> <span class="n">plain_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">    A progress bar set to your task.</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">plain_bar</span><span class="p">:</span>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>        <span class="n">total_so_far</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">track</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seconds</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sleeping...&quot;</span><span class="p">):</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>            <span class="n">total_so_far</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done sleeping for </span><span class="si">{</span><span class="n">total_so_far</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>        <span class="n">total_so_far_2</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>        <span class="k">with</span> <span class="n">typer</span><span class="o">.</span><span class="n">progressbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seconds</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sleeping...&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">progress</span><span class="p">:</span>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>                <span class="n">total_so_far_2</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done sleeping for </span><span class="si">{</span><span class="n">total_so_far_2</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="c1">##################################################################################</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="c1"># Additional Validations</span>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="c1">##################################################################################</span>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Additional Validations&quot;</span><span class="p">)</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="k">def</span> <span class="nf">numeric_intake</span><span class="p">(</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>    <span class="n">x_int</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>    <span class="n">y_int</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Has `min` and `max` restrictions on numeric arguments&quot;&quot;&quot;</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>    <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[blue]X[/blue]: </span><span class="si">{</span><span class="n">x_int</span><span class="si">}</span><span class="s2">, [green]Y[/green]: </span><span class="si">{</span><span class="n">y_int</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>    <span class="k">return</span> <span class="n">x_int</span> <span class="o">+</span> <span class="n">y_int</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">more</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;more info&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Just for me as I figure out how these libraries work and the info they need.&quot;&quot;&quot;</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="n">max_channels</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">query_devices</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">)[</span><span class="s2">&quot;max_input_channels&quot;</span><span class="p">]</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max Channels: </span><span class="si">{</span><span class="n">max_channels</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="k">if</span> <span class="n">more</span><span class="p">:</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sd</span><span class="o">.</span><span class="n">query_devices</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">):</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buncha stuff: </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Record&quot;</span><span class="p">)</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="k">def</span> <span class="nf">record_audio_until_button_pushed</span><span class="p">():</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="sd">    Records audio to a wav file at proj directory root.</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">    File is labelled &quot;*recording.wave*&quot;</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">    Re-recording will overwrite the previous file.</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="c1"># Parameters for recording</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="n">RATE</span> <span class="o">=</span> <span class="mi">44100</span>  <span class="c1"># Sample rate  # pylint: disable=invalid-name</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>        <span class="mi">1</span>  <span class="c1"># Number of channels (1=mono, 2=stereo)  # pylint: disable=invalid-name</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="p">)</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="n">DTYPE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span>  <span class="c1"># Data type</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="c1"># CHUNK_SIZE = 1024  # Number of frames per buffer  # pylint: disable=invalid-name</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="n">RECORDING</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># pylint: disable=invalid-name</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>    <span class="c1"># Create a buffer to store audio data</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>    <span class="n">audio_buffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">CHANNELS</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="c1"># Callback function for the audio stream</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="k">def</span> <span class="nf">audio_callback</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>  <span class="c1"># pylint: disable=all</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Passed to sounddevice &#39;stream&#39;; records&quot;&quot;&quot;</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>        <span class="k">nonlocal</span> <span class="n">audio_buffer</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="n">audio_buffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">audio_buffer</span><span class="p">,</span> <span class="n">indata</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>    <span class="c1"># Start the audio stream</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>    <span class="n">stream</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">InputStream</span><span class="p">(</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>        <span class="n">samplerate</span><span class="o">=</span><span class="n">RATE</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">CHANNELS</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">audio_callback</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="p">)</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>    <span class="n">stream</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="c1"># Function to stop recording when button is pushed</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="k">def</span> <span class="nf">stop_recording</span><span class="p">():</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;pasesed to tkinter button; ends recording&quot;&quot;&quot;</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="k">nonlocal</span> <span class="n">RECORDING</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>        <span class="n">RECORDING</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># pylint: disable=invalid-name</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>        <span class="n">stream</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>        <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>        <span class="k">if</span> <span class="n">audio_buffer</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Check if there&#39;s any recorded data</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>            <span class="n">wavio</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;recording.wav&quot;</span><span class="p">,</span> <span class="n">audio_buffer</span><span class="p">,</span> <span class="n">RATE</span><span class="p">,</span> <span class="n">sampwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>        <span class="n">root</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="c1"># Create a simple GUI window with a button</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>    <span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Audio Recorder&quot;</span><span class="p">)</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>    <span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Stop Recording&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">stop_recording</span><span class="p">)</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>    <span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>    <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -258,13 +207,13 @@ the typer framework and decorators.</p>
 
     </div>
     <a class="headerlink" href="#version_callback"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="version_callback-26"><a href="#version_callback-26"><span class="linenos">26</span></a><span class="k">def</span> <span class="nf">version_callback</span><span class="p">(</span><span class="n">version</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
-</span><span id="version_callback-27"><a href="#version_callback-27"><span class="linenos">27</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="version_callback-28"><a href="#version_callback-28"><span class="linenos">28</span></a><span class="sd">    Print app version and exit</span>
-</span><span id="version_callback-29"><a href="#version_callback-29"><span class="linenos">29</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="version_callback-30"><a href="#version_callback-30"><span class="linenos">30</span></a>    <span class="k">if</span> <span class="n">version</span><span class="p">:</span>
-</span><span id="version_callback-31"><a href="#version_callback-31"><span class="linenos">31</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;record_with_button (&#39;</span><span class="si">{</span><span class="n">APP_NAME</span><span class="si">}</span><span class="s2">&#39;) Version: </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="version_callback-32"><a href="#version_callback-32"><span class="linenos">32</span></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="version_callback-34"><a href="#version_callback-34"><span class="linenos">34</span></a><span class="k">def</span> <span class="nf">version_callback</span><span class="p">(</span><span class="n">version</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+</span><span id="version_callback-35"><a href="#version_callback-35"><span class="linenos">35</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="version_callback-36"><a href="#version_callback-36"><span class="linenos">36</span></a><span class="sd">    Print app version and exit</span>
+</span><span id="version_callback-37"><a href="#version_callback-37"><span class="linenos">37</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="version_callback-38"><a href="#version_callback-38"><span class="linenos">38</span></a>    <span class="k">if</span> <span class="n">version</span><span class="p">:</span>
+</span><span id="version_callback-39"><a href="#version_callback-39"><span class="linenos">39</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;record_with_button (&#39;</span><span class="si">{</span><span class="n">APP_NAME</span><span class="si">}</span><span class="s2">&#39;) Version: </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="version_callback-40"><a href="#version_callback-40"><span class="linenos">40</span></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -285,25 +234,25 @@ the typer framework and decorators.</p>
 
     </div>
     <a class="headerlink" href="#app_options"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="app_options-35"><a href="#app_options-35"><span class="linenos">35</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;[bold]record_with_button[/bold] CLI App&quot;</span><span class="p">)</span>
-</span><span id="app_options-36"><a href="#app_options-36"><span class="linenos">36</span></a><span class="k">def</span> <span class="nf">app_options</span><span class="p">(</span>
-</span><span id="app_options-37"><a href="#app_options-37"><span class="linenos">37</span></a>    <span class="n">_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-</span><span id="app_options-38"><a href="#app_options-38"><span class="linenos">38</span></a>        <span class="kc">None</span><span class="p">,</span>
-</span><span id="app_options-39"><a href="#app_options-39"><span class="linenos">39</span></a>        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
-</span><span id="app_options-40"><a href="#app_options-40"><span class="linenos">40</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show version of this app&quot;</span><span class="p">,</span>
-</span><span id="app_options-41"><a href="#app_options-41"><span class="linenos">41</span></a>        <span class="n">callback</span><span class="o">=</span><span class="n">version_callback</span><span class="p">,</span>
-</span><span id="app_options-42"><a href="#app_options-42"><span class="linenos">42</span></a>        <span class="n">is_eager</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="app_options-43"><a href="#app_options-43"><span class="linenos">43</span></a>    <span class="p">)</span>
-</span><span id="app_options-44"><a href="#app_options-44"><span class="linenos">44</span></a><span class="p">):</span>
-</span><span id="app_options-45"><a href="#app_options-45"><span class="linenos">45</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="app_options-46"><a href="#app_options-46"><span class="linenos">46</span></a><span class="sd">    This callback is called by the **base app** itself.</span>
-</span><span id="app_options-47"><a href="#app_options-47"><span class="linenos">47</span></a><span class="sd">    Sub-callbacks are used by the options to perform actions.</span>
-</span><span id="app_options-48"><a href="#app_options-48"><span class="linenos">48</span></a><span class="sd">    The eager sub-callback allows us to circumvent typer&#39;s expectation that a regular</span>
-</span><span id="app_options-49"><a href="#app_options-49"><span class="linenos">49</span></a><span class="sd">    command is still comming.</span>
-</span><span id="app_options-50"><a href="#app_options-50"><span class="linenos">50</span></a>
-</span><span id="app_options-51"><a href="#app_options-51"><span class="linenos">51</span></a><span class="sd">    (Side Note: Yes, I agree this is slightly awkward for something as standard as</span>
-</span><span id="app_options-52"><a href="#app_options-52"><span class="linenos">52</span></a><span class="sd">    `--version`, but it does seem to be the best way to do it in this framework.)</span>
-</span><span id="app_options-53"><a href="#app_options-53"><span class="linenos">53</span></a><span class="sd">    &quot;&quot;&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="app_options-43"><a href="#app_options-43"><span class="linenos">43</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;[bold]record_with_button[/bold] CLI App&quot;</span><span class="p">)</span>
+</span><span id="app_options-44"><a href="#app_options-44"><span class="linenos">44</span></a><span class="k">def</span> <span class="nf">app_options</span><span class="p">(</span>
+</span><span id="app_options-45"><a href="#app_options-45"><span class="linenos">45</span></a>    <span class="n">_</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="app_options-46"><a href="#app_options-46"><span class="linenos">46</span></a>        <span class="kc">None</span><span class="p">,</span>
+</span><span id="app_options-47"><a href="#app_options-47"><span class="linenos">47</span></a>        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+</span><span id="app_options-48"><a href="#app_options-48"><span class="linenos">48</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show version of this app&quot;</span><span class="p">,</span>
+</span><span id="app_options-49"><a href="#app_options-49"><span class="linenos">49</span></a>        <span class="n">callback</span><span class="o">=</span><span class="n">version_callback</span><span class="p">,</span>
+</span><span id="app_options-50"><a href="#app_options-50"><span class="linenos">50</span></a>        <span class="n">is_eager</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="app_options-51"><a href="#app_options-51"><span class="linenos">51</span></a>    <span class="p">)</span>
+</span><span id="app_options-52"><a href="#app_options-52"><span class="linenos">52</span></a><span class="p">):</span>
+</span><span id="app_options-53"><a href="#app_options-53"><span class="linenos">53</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="app_options-54"><a href="#app_options-54"><span class="linenos">54</span></a><span class="sd">    This callback is called by the **base app** itself.</span>
+</span><span id="app_options-55"><a href="#app_options-55"><span class="linenos">55</span></a><span class="sd">    Sub-callbacks are used by the options to perform actions.</span>
+</span><span id="app_options-56"><a href="#app_options-56"><span class="linenos">56</span></a><span class="sd">    The eager sub-callback allows us to circumvent typer&#39;s expectation that a regular</span>
+</span><span id="app_options-57"><a href="#app_options-57"><span class="linenos">57</span></a><span class="sd">    command is still comming.</span>
+</span><span id="app_options-58"><a href="#app_options-58"><span class="linenos">58</span></a>
+</span><span id="app_options-59"><a href="#app_options-59"><span class="linenos">59</span></a><span class="sd">    (Side Note: Yes, I agree this is slightly awkward for something as standard as</span>
+</span><span id="app_options-60"><a href="#app_options-60"><span class="linenos">60</span></a><span class="sd">    `--version`, but it does seem to be the best way to do it in this framework.)</span>
+</span><span id="app_options-61"><a href="#app_options-61"><span class="linenos">61</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -318,207 +267,100 @@ command is still comming.</p>
 
 
                 </section>
-                <section id="what_am_i">
-                            <input id="what_am_i-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="info">
+                            <input id="info-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
-                    <div class="decorator">@app.command(rich_help_panel=&#39;Prompted&#39;)</div>
+                    <div class="decorator">@app.command()</div>
 
         <span class="def">def</span>
-        <span class="name">what_am_i</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ArgumentInfo</span> <span class="nb">object</span><span class="o">&gt;</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
+        <span class="name">info</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">more</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OptionInfo</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x1026e48d0</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
 
-                <label class="view-source-button" for="what_am_i-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="info-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#what_am_i"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="what_am_i-61"><a href="#what_am_i-61"><span class="linenos">61</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Prompted&quot;</span><span class="p">)</span>
-</span><span id="what_am_i-62"><a href="#what_am_i-62"><span class="linenos">62</span></a><span class="k">def</span> <span class="nf">what_am_i</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="what_am_i-63"><a href="#what_am_i-63"><span class="linenos">63</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Share your name -- get a fun fact.&quot;&quot;&quot;</span>
-</span><span id="what_am_i-64"><a href="#what_am_i-64"><span class="linenos">64</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="what_am_i-65"><a href="#what_am_i-65"><span class="linenos">65</span></a>        <span class="n">name_out</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Prompt</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="s2">&quot;Enter your name, plz :sunglasses:&quot;</span><span class="p">)</span>
-</span><span id="what_am_i-66"><a href="#what_am_i-66"><span class="linenos">66</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="what_am_i-67"><a href="#what_am_i-67"><span class="linenos">67</span></a>        <span class="n">name_out</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="what_am_i-68"><a href="#what_am_i-68"><span class="linenos">68</span></a>
-</span><span id="what_am_i-69"><a href="#what_am_i-69"><span class="linenos">69</span></a>    <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">What, </span><span class="si">{</span><span class="n">name_out</span><span class="si">}</span><span class="s2">, are you?&quot;</span><span class="p">)</span>
-</span><span id="what_am_i-70"><a href="#what_am_i-70"><span class="linenos">70</span></a>    <span class="c1"># example of using rich-print&#39;s MarkUp</span>
-</span><span id="what_am_i-71"><a href="#what_am_i-71"><span class="linenos">71</span></a>    <span class="n">rprint</span><span class="p">(</span>
-</span><span id="what_am_i-72"><a href="#what_am_i-72"><span class="linenos">72</span></a>        <span class="sa">f</span><span class="s2">&quot;[green]Why you are [bold red]loved[/bold red][/green] </span><span class="se">\</span>
-</span><span id="what_am_i-73"><a href="#what_am_i-73"><span class="linenos">73</span></a><span class="s2">[blue]</span><span class="si">{</span><span class="n">name_out</span><span class="si">}</span><span class="s2">[/blue][green]![/green] :heart:&quot;</span>
-</span><span id="what_am_i-74"><a href="#what_am_i-74"><span class="linenos">74</span></a>    <span class="p">)</span>
+    <a class="headerlink" href="#info"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="info-69"><a href="#info-69"><span class="linenos">69</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+</span><span id="info-70"><a href="#info-70"><span class="linenos">70</span></a><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">more</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;more info&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="info-71"><a href="#info-71"><span class="linenos">71</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Just for me as I figure out how these libraries work and the info they need.&quot;&quot;&quot;</span>
+</span><span id="info-72"><a href="#info-72"><span class="linenos">72</span></a>    <span class="n">max_channels</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">query_devices</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">)[</span><span class="s2">&quot;max_input_channels&quot;</span><span class="p">]</span>
+</span><span id="info-73"><a href="#info-73"><span class="linenos">73</span></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max Channels: </span><span class="si">{</span><span class="n">max_channels</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="info-74"><a href="#info-74"><span class="linenos">74</span></a>    <span class="k">if</span> <span class="n">more</span><span class="p">:</span>
+</span><span id="info-75"><a href="#info-75"><span class="linenos">75</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sd</span><span class="o">.</span><span class="n">query_devices</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">):</span>
+</span><span id="info-76"><a href="#info-76"><span class="linenos">76</span></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buncha stuff: </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Share your name -- get a fun fact.</p>
+            <div class="docstring"><p>Just for me as I figure out how these libraries work and the info they need.</p>
 </div>
 
 
                 </section>
-                <section id="pword">
-                            <input id="pword-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="record_audio_until_button_pushed">
+                            <input id="record_audio_until_button_pushed-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
-                    <div class="decorator">@app.command(rich_help_panel=&#39;Prompted&#39;)</div>
+                    <div class="decorator">@app.command(rich_help_panel=&#39;Record&#39;)</div>
 
         <span class="def">def</span>
-        <span class="name">pword</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>, </span><span class="param"><span class="n">_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OptionInfo</span> <span class="nb">object</span><span class="o">&gt;</span></span><span class="return-annotation">):</span></span>
+        <span class="name">record_audio_until_button_pushed</span><span class="signature pdoc-code condensed">(<span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="pword-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="record_audio_until_button_pushed-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#pword"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="pword-77"><a href="#pword-77"><span class="linenos">77</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Prompted&quot;</span><span class="p">)</span>
-</span><span id="pword-78"><a href="#pword-78"><span class="linenos">78</span></a><span class="k">def</span> <span class="nf">pword</span><span class="p">(</span>
-</span><span id="pword-79"><a href="#pword-79"><span class="linenos">79</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-</span><span id="pword-80"><a href="#pword-80"><span class="linenos">80</span></a>    <span class="n">_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
-</span><span id="pword-81"><a href="#pword-81"><span class="linenos">81</span></a>        <span class="o">...</span><span class="p">,</span>
-</span><span id="pword-82"><a href="#pword-82"><span class="linenos">82</span></a>        <span class="s2">&quot;--hidden-input-string&quot;</span><span class="p">,</span>
-</span><span id="pword-83"><a href="#pword-83"><span class="linenos">83</span></a>        <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="pword-84"><a href="#pword-84"><span class="linenos">84</span></a>        <span class="n">confirmation_prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="pword-85"><a href="#pword-85"><span class="linenos">85</span></a>        <span class="n">hide_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="pword-86"><a href="#pword-86"><span class="linenos">86</span></a>    <span class="p">),</span>
-</span><span id="pword-87"><a href="#pword-87"><span class="linenos">87</span></a>    <span class="c1"># NOTE: we would NOT want this as it allows explicit flag calling and regular</span>
-</span><span id="pword-88"><a href="#pword-88"><span class="linenos">88</span></a>    <span class="c1">#       code inputing</span>
-</span><span id="pword-89"><a href="#pword-89"><span class="linenos">89</span></a><span class="p">):</span>
-</span><span id="pword-90"><a href="#pword-90"><span class="linenos">90</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Example use of \&quot;hide_input\&quot; true.&quot;&quot;&quot;</span>
-</span><span id="pword-91"><a href="#pword-91"><span class="linenos">91</span></a>
-</span><span id="pword-92"><a href="#pword-92"><span class="linenos">92</span></a>    <span class="n">rprint</span><span class="p">(</span>
-</span><span id="pword-93"><a href="#pword-93"><span class="linenos">93</span></a>        <span class="sa">f</span><span class="s2">&quot;Hello [blue]</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">[/blue]. Doing something very secure :lock: with password.&quot;</span>
-</span><span id="pword-94"><a href="#pword-94"><span class="linenos">94</span></a>    <span class="p">)</span>
+    <a class="headerlink" href="#record_audio_until_button_pushed"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="record_audio_until_button_pushed-79"><a href="#record_audio_until_button_pushed-79"><span class="linenos"> 79</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Record&quot;</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-80"><a href="#record_audio_until_button_pushed-80"><span class="linenos"> 80</span></a><span class="k">def</span> <span class="nf">record_audio_until_button_pushed</span><span class="p">():</span>
+</span><span id="record_audio_until_button_pushed-81"><a href="#record_audio_until_button_pushed-81"><span class="linenos"> 81</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="record_audio_until_button_pushed-82"><a href="#record_audio_until_button_pushed-82"><span class="linenos"> 82</span></a><span class="sd">    Records audio to a wav file at proj directory root.</span>
+</span><span id="record_audio_until_button_pushed-83"><a href="#record_audio_until_button_pushed-83"><span class="linenos"> 83</span></a><span class="sd">    File is labelled &quot;*recording.wave*&quot;</span>
+</span><span id="record_audio_until_button_pushed-84"><a href="#record_audio_until_button_pushed-84"><span class="linenos"> 84</span></a><span class="sd">    Re-recording will overwrite the previous file.</span>
+</span><span id="record_audio_until_button_pushed-85"><a href="#record_audio_until_button_pushed-85"><span class="linenos"> 85</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="record_audio_until_button_pushed-86"><a href="#record_audio_until_button_pushed-86"><span class="linenos"> 86</span></a>    <span class="c1"># Parameters for recording</span>
+</span><span id="record_audio_until_button_pushed-87"><a href="#record_audio_until_button_pushed-87"><span class="linenos"> 87</span></a>    <span class="n">RATE</span> <span class="o">=</span> <span class="mi">44100</span>  <span class="c1"># Sample rate  # pylint: disable=invalid-name</span>
+</span><span id="record_audio_until_button_pushed-88"><a href="#record_audio_until_button_pushed-88"><span class="linenos"> 88</span></a>    <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="record_audio_until_button_pushed-89"><a href="#record_audio_until_button_pushed-89"><span class="linenos"> 89</span></a>        <span class="mi">1</span>  <span class="c1"># Number of channels (1=mono, 2=stereo)  # pylint: disable=invalid-name</span>
+</span><span id="record_audio_until_button_pushed-90"><a href="#record_audio_until_button_pushed-90"><span class="linenos"> 90</span></a>    <span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-91"><a href="#record_audio_until_button_pushed-91"><span class="linenos"> 91</span></a>    <span class="n">DTYPE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span>  <span class="c1"># Data type</span>
+</span><span id="record_audio_until_button_pushed-92"><a href="#record_audio_until_button_pushed-92"><span class="linenos"> 92</span></a>    <span class="c1"># CHUNK_SIZE = 1024  # Number of frames per buffer  # pylint: disable=invalid-name</span>
+</span><span id="record_audio_until_button_pushed-93"><a href="#record_audio_until_button_pushed-93"><span class="linenos"> 93</span></a>    <span class="n">RECORDING</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># pylint: disable=invalid-name</span>
+</span><span id="record_audio_until_button_pushed-94"><a href="#record_audio_until_button_pushed-94"><span class="linenos"> 94</span></a>
+</span><span id="record_audio_until_button_pushed-95"><a href="#record_audio_until_button_pushed-95"><span class="linenos"> 95</span></a>    <span class="c1"># Create a buffer to store audio data</span>
+</span><span id="record_audio_until_button_pushed-96"><a href="#record_audio_until_button_pushed-96"><span class="linenos"> 96</span></a>    <span class="n">audio_buffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">CHANNELS</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-97"><a href="#record_audio_until_button_pushed-97"><span class="linenos"> 97</span></a>
+</span><span id="record_audio_until_button_pushed-98"><a href="#record_audio_until_button_pushed-98"><span class="linenos"> 98</span></a>    <span class="c1"># Callback function for the audio stream</span>
+</span><span id="record_audio_until_button_pushed-99"><a href="#record_audio_until_button_pushed-99"><span class="linenos"> 99</span></a>    <span class="k">def</span> <span class="nf">audio_callback</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>  <span class="c1"># pylint: disable=all</span>
+</span><span id="record_audio_until_button_pushed-100"><a href="#record_audio_until_button_pushed-100"><span class="linenos">100</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Passed to sounddevice &#39;stream&#39;; records&quot;&quot;&quot;</span>
+</span><span id="record_audio_until_button_pushed-101"><a href="#record_audio_until_button_pushed-101"><span class="linenos">101</span></a>        <span class="k">nonlocal</span> <span class="n">audio_buffer</span>
+</span><span id="record_audio_until_button_pushed-102"><a href="#record_audio_until_button_pushed-102"><span class="linenos">102</span></a>        <span class="n">audio_buffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">audio_buffer</span><span class="p">,</span> <span class="n">indata</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-103"><a href="#record_audio_until_button_pushed-103"><span class="linenos">103</span></a>
+</span><span id="record_audio_until_button_pushed-104"><a href="#record_audio_until_button_pushed-104"><span class="linenos">104</span></a>    <span class="c1"># Start the audio stream</span>
+</span><span id="record_audio_until_button_pushed-105"><a href="#record_audio_until_button_pushed-105"><span class="linenos">105</span></a>    <span class="n">stream</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">InputStream</span><span class="p">(</span>
+</span><span id="record_audio_until_button_pushed-106"><a href="#record_audio_until_button_pushed-106"><span class="linenos">106</span></a>        <span class="n">samplerate</span><span class="o">=</span><span class="n">RATE</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">CHANNELS</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">audio_callback</span>
+</span><span id="record_audio_until_button_pushed-107"><a href="#record_audio_until_button_pushed-107"><span class="linenos">107</span></a>    <span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-108"><a href="#record_audio_until_button_pushed-108"><span class="linenos">108</span></a>    <span class="n">stream</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="record_audio_until_button_pushed-109"><a href="#record_audio_until_button_pushed-109"><span class="linenos">109</span></a>
+</span><span id="record_audio_until_button_pushed-110"><a href="#record_audio_until_button_pushed-110"><span class="linenos">110</span></a>    <span class="c1"># Function to stop recording when button is pushed</span>
+</span><span id="record_audio_until_button_pushed-111"><a href="#record_audio_until_button_pushed-111"><span class="linenos">111</span></a>    <span class="k">def</span> <span class="nf">stop_recording</span><span class="p">():</span>
+</span><span id="record_audio_until_button_pushed-112"><a href="#record_audio_until_button_pushed-112"><span class="linenos">112</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;pasesed to tkinter button; ends recording&quot;&quot;&quot;</span>
+</span><span id="record_audio_until_button_pushed-113"><a href="#record_audio_until_button_pushed-113"><span class="linenos">113</span></a>        <span class="k">nonlocal</span> <span class="n">RECORDING</span>
+</span><span id="record_audio_until_button_pushed-114"><a href="#record_audio_until_button_pushed-114"><span class="linenos">114</span></a>        <span class="n">RECORDING</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># pylint: disable=invalid-name</span>
+</span><span id="record_audio_until_button_pushed-115"><a href="#record_audio_until_button_pushed-115"><span class="linenos">115</span></a>        <span class="n">stream</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="record_audio_until_button_pushed-116"><a href="#record_audio_until_button_pushed-116"><span class="linenos">116</span></a>        <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="record_audio_until_button_pushed-117"><a href="#record_audio_until_button_pushed-117"><span class="linenos">117</span></a>        <span class="k">if</span> <span class="n">audio_buffer</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Check if there&#39;s any recorded data</span>
+</span><span id="record_audio_until_button_pushed-118"><a href="#record_audio_until_button_pushed-118"><span class="linenos">118</span></a>            <span class="n">wavio</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;recording.wav&quot;</span><span class="p">,</span> <span class="n">audio_buffer</span><span class="p">,</span> <span class="n">RATE</span><span class="p">,</span> <span class="n">sampwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-119"><a href="#record_audio_until_button_pushed-119"><span class="linenos">119</span></a>        <span class="n">root</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</span><span id="record_audio_until_button_pushed-120"><a href="#record_audio_until_button_pushed-120"><span class="linenos">120</span></a>
+</span><span id="record_audio_until_button_pushed-121"><a href="#record_audio_until_button_pushed-121"><span class="linenos">121</span></a>    <span class="c1"># Create a simple GUI window with a button</span>
+</span><span id="record_audio_until_button_pushed-122"><a href="#record_audio_until_button_pushed-122"><span class="linenos">122</span></a>    <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+</span><span id="record_audio_until_button_pushed-123"><a href="#record_audio_until_button_pushed-123"><span class="linenos">123</span></a>    <span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Audio Recorder&quot;</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-124"><a href="#record_audio_until_button_pushed-124"><span class="linenos">124</span></a>    <span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Stop Recording&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">stop_recording</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-125"><a href="#record_audio_until_button_pushed-125"><span class="linenos">125</span></a>    <span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span><span id="record_audio_until_button_pushed-126"><a href="#record_audio_until_button_pushed-126"><span class="linenos">126</span></a>    <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Example use of "hide_input" true.</p>
-</div>
-
-
-                </section>
-                <section id="adding_tags">
-                            <input id="adding_tags-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-                    <div class="decorator">@app.command(rich_help_panel=&#39;Prompted&#39;)</div>
-
-        <span class="def">def</span>
-        <span class="name">adding_tags</span><span class="signature pdoc-code condensed">(<span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
-
-                <label class="view-source-button" for="adding_tags-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#adding_tags"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="adding_tags-97"><a href="#adding_tags-97"><span class="linenos"> 97</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Prompted&quot;</span><span class="p">)</span>
-</span><span id="adding_tags-98"><a href="#adding_tags-98"><span class="linenos"> 98</span></a><span class="k">def</span> <span class="nf">adding_tags</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="adding_tags-99"><a href="#adding_tags-99"><span class="linenos"> 99</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Example of using rich&#39;s prompt to add tags to a ticket&quot;&quot;&quot;</span>
-</span><span id="adding_tags-100"><a href="#adding_tags-100"><span class="linenos">100</span></a>    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="adding_tags-101"><a href="#adding_tags-101"><span class="linenos">101</span></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="adding_tags-102"><a href="#adding_tags-102"><span class="linenos">102</span></a>        <span class="n">tag</span> <span class="o">=</span> <span class="n">Prompt</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="s2">&quot;Enter a tag, or [bold red]q[/bold red] to quit&quot;</span><span class="p">)</span>
-</span><span id="adding_tags-103"><a href="#adding_tags-103"><span class="linenos">103</span></a>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
-</span><span id="adding_tags-104"><a href="#adding_tags-104"><span class="linenos">104</span></a>            <span class="k">break</span>
-</span><span id="adding_tags-105"><a href="#adding_tags-105"><span class="linenos">105</span></a>        <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-</span><span id="adding_tags-106"><a href="#adding_tags-106"><span class="linenos">106</span></a>    <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tags: </span><span class="si">{</span><span class="n">tags</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Example of using rich's prompt to add tags to a ticket</p>
-</div>
-
-
-                </section>
-                <section id="spin">
-                            <input id="spin-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-                    <div class="decorator">@app.command(rich_help_panel=&#39;Visual&#39;)</div>
-
-        <span class="def">def</span>
-        <span class="name">spin</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ArgumentInfo</span> <span class="nb">object</span><span class="o">&gt;</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
-
-                <label class="view-source-button" for="spin-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#spin"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="spin-114"><a href="#spin-114"><span class="linenos">114</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Visual&quot;</span><span class="p">)</span>
-</span><span id="spin-115"><a href="#spin-115"><span class="linenos">115</span></a><span class="k">def</span> <span class="nf">spin</span><span class="p">(</span><span class="n">seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">36</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="spin-116"><a href="#spin-116"><span class="linenos">116</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Spinners for the unknowably long and asynchronous.&quot;&quot;&quot;</span>
-</span><span id="spin-117"><a href="#spin-117"><span class="linenos">117</span></a>
-</span><span id="spin-118"><a href="#spin-118"><span class="linenos">118</span></a>    <span class="k">with</span> <span class="n">Progress</span><span class="p">(</span>
-</span><span id="spin-119"><a href="#spin-119"><span class="linenos">119</span></a>        <span class="n">SpinnerColumn</span><span class="p">(),</span>
-</span><span id="spin-120"><a href="#spin-120"><span class="linenos">120</span></a>        <span class="n">TextColumn</span><span class="p">(</span><span class="s2">&quot;[progress.description]</span><span class="si">{task.description}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">),</span>
-</span><span id="spin-121"><a href="#spin-121"><span class="linenos">121</span></a>        <span class="n">transient</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="spin-122"><a href="#spin-122"><span class="linenos">122</span></a>    <span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
-</span><span id="spin-123"><a href="#spin-123"><span class="linenos">123</span></a>        <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;Task A...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">seconds</span><span class="p">)</span>
-</span><span id="spin-124"><a href="#spin-124"><span class="linenos">124</span></a>        <span class="n">task</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;Task B...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">seconds</span><span class="p">)</span>
-</span><span id="spin-125"><a href="#spin-125"><span class="linenos">125</span></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
-</span><span id="spin-126"><a href="#spin-126"><span class="linenos">126</span></a>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="spin-127"><a href="#spin-127"><span class="linenos">127</span></a>            <span class="n">progress</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Spinners for the unknowably long and asynchronous.</p>
-</div>
-
-
-                </section>
-                <section id="progbar">
-                            <input id="progbar-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-                    <div class="decorator">@app.command(rich_help_panel=&#39;Visual&#39;)</div>
-
-        <span class="def">def</span>
-        <span class="name">progbar</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ArgumentInfo</span> <span class="nb">object</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">plain_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
-
-                <label class="view-source-button" for="progbar-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#progbar"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="progbar-130"><a href="#progbar-130"><span class="linenos">130</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Visual&quot;</span><span class="p">)</span>
-</span><span id="progbar-131"><a href="#progbar-131"><span class="linenos">131</span></a><span class="k">def</span> <span class="nf">progbar</span><span class="p">(</span>
-</span><span id="progbar-132"><a href="#progbar-132"><span class="linenos">132</span></a>    <span class="n">seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span> <span class="n">plain_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="progbar-133"><a href="#progbar-133"><span class="linenos">133</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="progbar-134"><a href="#progbar-134"><span class="linenos">134</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="progbar-135"><a href="#progbar-135"><span class="linenos">135</span></a><span class="sd">    A progress bar set to your task.</span>
-</span><span id="progbar-136"><a href="#progbar-136"><span class="linenos">136</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="progbar-137"><a href="#progbar-137"><span class="linenos">137</span></a>
-</span><span id="progbar-138"><a href="#progbar-138"><span class="linenos">138</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">plain_bar</span><span class="p">:</span>
-</span><span id="progbar-139"><a href="#progbar-139"><span class="linenos">139</span></a>        <span class="n">total_so_far</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="progbar-140"><a href="#progbar-140"><span class="linenos">140</span></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">track</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seconds</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sleeping...&quot;</span><span class="p">):</span>
-</span><span id="progbar-141"><a href="#progbar-141"><span class="linenos">141</span></a>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="progbar-142"><a href="#progbar-142"><span class="linenos">142</span></a>            <span class="n">total_so_far</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span id="progbar-143"><a href="#progbar-143"><span class="linenos">143</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done sleeping for </span><span class="si">{</span><span class="n">total_so_far</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-</span><span id="progbar-144"><a href="#progbar-144"><span class="linenos">144</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="progbar-145"><a href="#progbar-145"><span class="linenos">145</span></a>        <span class="n">total_so_far_2</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="progbar-146"><a href="#progbar-146"><span class="linenos">146</span></a>        <span class="k">with</span> <span class="n">typer</span><span class="o">.</span><span class="n">progressbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seconds</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sleeping...&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
-</span><span id="progbar-147"><a href="#progbar-147"><span class="linenos">147</span></a>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">progress</span><span class="p">:</span>
-</span><span id="progbar-148"><a href="#progbar-148"><span class="linenos">148</span></a>                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="progbar-149"><a href="#progbar-149"><span class="linenos">149</span></a>                <span class="n">total_so_far_2</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span id="progbar-150"><a href="#progbar-150"><span class="linenos">150</span></a>        <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done sleeping for </span><span class="si">{</span><span class="n">total_so_far_2</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>A progress bar set to your task.</p>
-</div>
-
-
-                </section>
-                <section id="numeric_intake">
-                            <input id="numeric_intake-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-                    <div class="decorator">@app.command(rich_help_panel=&#39;Additional Validations&#39;)</div>
-
-        <span class="def">def</span>
-        <span class="name">numeric_intake</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">x_int</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ArgumentInfo</span> <span class="nb">object</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">y_int</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ArgumentInfo</span> <span class="nb">object</span><span class="o">&gt;</span></span><span class="return-annotation">) -> <span class="nb">int</span>:</span></span>
-
-                <label class="view-source-button" for="numeric_intake-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#numeric_intake"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="numeric_intake-158"><a href="#numeric_intake-158"><span class="linenos">158</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">rich_help_panel</span><span class="o">=</span><span class="s2">&quot;Additional Validations&quot;</span><span class="p">)</span>
-</span><span id="numeric_intake-159"><a href="#numeric_intake-159"><span class="linenos">159</span></a><span class="k">def</span> <span class="nf">numeric_intake</span><span class="p">(</span>
-</span><span id="numeric_intake-160"><a href="#numeric_intake-160"><span class="linenos">160</span></a>    <span class="n">x_int</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-</span><span id="numeric_intake-161"><a href="#numeric_intake-161"><span class="linenos">161</span></a>    <span class="n">y_int</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-</span><span id="numeric_intake-162"><a href="#numeric_intake-162"><span class="linenos">162</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="numeric_intake-163"><a href="#numeric_intake-163"><span class="linenos">163</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Has `min` and `max` restrictions on numeric arguments&quot;&quot;&quot;</span>
-</span><span id="numeric_intake-164"><a href="#numeric_intake-164"><span class="linenos">164</span></a>    <span class="n">rprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[blue]X[/blue]: </span><span class="si">{</span><span class="n">x_int</span><span class="si">}</span><span class="s2">, [green]Y[/green]: </span><span class="si">{</span><span class="n">y_int</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="numeric_intake-165"><a href="#numeric_intake-165"><span class="linenos">165</span></a>    <span class="k">return</span> <span class="n">x_int</span> <span class="o">+</span> <span class="n">y_int</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Has <code>min</code> and <code>max</code> restrictions on numeric arguments</p>
+            <div class="docstring"><p>Records audio to a wav file at proj directory root.
+File is labelled "<em>recording.wave</em>"
+Re-recording will overwrite the previous file.</p>
 </div>
 
 
