@@ -5,13 +5,17 @@ the typer framework and decorators.
 """
 
 import time
+import tkinter as tk
 from importlib import metadata
 from typing import Optional
 
+import numpy as np
+import sounddevice as sd
 import typer
+import wavio
 from rich import print as rprint
 from rich.progress import Progress, SpinnerColumn, TextColumn, track
-from rich.prompt import Prompt
+from typing_extensions import Annotated
 
 from . import __name__ as APP_NAME
 
@@ -20,6 +24,10 @@ app = typer.Typer(rich_markup_mode="rich", add_completion=False)
 
 # get version from pyproject.toml
 __version__ = metadata.version(__package__)
+
+##################################################################################
+# Boilerplate
+##################################################################################
 
 
 def version_callback(version: bool):
@@ -57,108 +65,61 @@ def app_options(
 ##################################################################################
 
 
-@app.command(rich_help_panel="Prompted")
-def what_am_i(name: Optional[str] = typer.Argument(None)) -> None:
-    """Share your name -- get a fun fact."""
-    if name is None:
-        name_out: str = Prompt.ask("Enter your name, plz :sunglasses:")
-    else:
-        name_out: str = name
-
-    rprint(f"\nWhat, {name_out}, are you?")
-    # example of using rich-print's MarkUp
-    rprint(
-        f"[green]Why you are [bold red]loved[/bold red][/green] \
-[blue]{name_out}[/blue][green]![/green] :heart:"
-    )
+@app.command()
+def info(more: Annotated[bool, typer.Option(help="more info")] = False) -> None:
+    """Just for me as I figure out how these libraries work and the info they need."""
+    max_channels = sd.query_devices(kind="input")["max_input_channels"]
+    print(f"Max Channels: {max_channels}")
+    if more:
+        for elem in sd.query_devices(kind="input"):
+            print(f"Buncha stuff: {elem}")
 
 
-@app.command(rich_help_panel="Prompted")
-def pword(
-    name: str = "user",
-    _: str = typer.Option(
-        ...,
-        "--hidden-input-string",
-        prompt=True,
-        confirmation_prompt=True,
-        hide_input=True,
-    ),
-    # NOTE: we would NOT want this as it allows explicit flag calling and regular
-    #       code inputing
-):
-    """Example use of \"hide_input\" true."""
-
-    rprint(
-        f"Hello [blue]{name}[/blue]. Doing something very secure :lock: with password."
-    )
-
-
-@app.command(rich_help_panel="Prompted")
-def adding_tags() -> None:
-    """Example of using rich's prompt to add tags to a ticket"""
-    tags = []
-    while True:
-        tag = Prompt.ask("Enter a tag, or [bold red]q[/bold red] to quit")
-        if tag == "q":
-            break
-        tags.append(tag)
-    rprint(f"Tags: {tags}")
-
-
-##################################################################################
-# Visual Widgets
-##################################################################################
-
-
-@app.command(rich_help_panel="Visual")
-def spin(seconds: int = typer.Argument(5, min=1, max=36)) -> None:
-    """Spinners for the unknowably long and asynchronous."""
-
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}", justify="right"),
-        transient=True,
-    ) as progress:
-        progress.add_task("Task A...", total=seconds)
-        task = progress.add_task("Task B...", total=seconds)
-        for _ in range(seconds):
-            time.sleep(1)
-            progress.advance(task)
-
-
-@app.command(rich_help_panel="Visual")
-def progbar(
-    seconds: int = typer.Argument(5, min=1, max=16), plain_bar: bool = False
-) -> None:
+@app.command(rich_help_panel="Record")
+def record_audio_until_button_pushed():
     """
-    A progress bar set to your task.
+    Records audio to a wav file at proj directory root.
+    File is labelled "*recording.wave*"
+    Re-recording will overwrite the previous file.
     """
+    # Parameters for recording
+    RATE = 44100  # Sample rate  # pylint: disable=invalid-name
+    CHANNELS = (
+        1  # Number of channels (1=mono, 2=stereo)  # pylint: disable=invalid-name
+    )
+    DTYPE = np.int16  # Data type
+    # CHUNK_SIZE = 1024  # Number of frames per buffer  # pylint: disable=invalid-name
+    RECORDING = True  # pylint: disable=invalid-name
 
-    if not plain_bar:
-        total_so_far: int = 0
-        for _ in track(range(seconds), description="Sleeping..."):
-            time.sleep(1)
-            total_so_far += 1
-        rprint(f"Done sleeping for {total_so_far} seconds")
-    else:
-        total_so_far_2 = 0
-        with typer.progressbar(range(seconds), label="Sleeping...") as progress:
-            for _ in progress:
-                time.sleep(1)
-                total_so_far_2 += 1
-        rprint(f"Done sleeping for {total_so_far_2} seconds")
+    # Create a buffer to store audio data
+    audio_buffer = np.empty((0, CHANNELS), dtype=DTYPE)
 
+    # Callback function for the audio stream
+    def audio_callback(indata, frames, time, status):  # pylint: disable=all
+        """Passed to sounddevice 'stream'; records"""
+        nonlocal audio_buffer
+        audio_buffer = np.append(audio_buffer, indata, axis=0)
 
-##################################################################################
-# Additional Validations
-##################################################################################
+    # Start the audio stream
+    stream = sd.InputStream(
+        samplerate=RATE, channels=CHANNELS, dtype=DTYPE, callback=audio_callback
+    )
+    stream.start()
 
+    # Function to stop recording when button is pushed
+    def stop_recording():
+        """pasesed to tkinter button; ends recording"""
+        nonlocal RECORDING
+        RECORDING = False  # pylint: disable=invalid-name
+        stream.stop()
+        stream.close()
+        if audio_buffer.size > 0:  # Check if there's any recorded data
+            wavio.write("recording.wav", audio_buffer, RATE, sampwidth=2)
+        root.quit()
 
-@app.command(rich_help_panel="Additional Validations")
-def numeric_intake(
-    x_int: int = typer.Argument(..., min=0, max=2),
-    y_int: int = typer.Argument(..., min=-1, max=1),
-) -> int:
-    """Has `min` and `max` restrictions on numeric arguments"""
-    rprint(f"[blue]X[/blue]: {x_int}, [green]Y[/green]: {y_int}")
-    return x_int + y_int
+    # Create a simple GUI window with a button
+    root = tk.Tk()
+    root.title("Audio Recorder")
+    button = tk.Button(root, text="Stop Recording", command=stop_recording)
+    button.pack(pady=20)
+    root.mainloop()
