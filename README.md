@@ -1,12 +1,5 @@
 # record_with_button
 
-## CircleCI Test Status Badge
-To activate:
-- In CircleCI go to `Project Settings > Status Badges`
-- Click `Add API Token` button
-- Click the `Copy` button under `Embed Code` and paste in this README.md file. :)
-
-
 ## Auto-Documentation Link
 To activate:
 - In GitHub repo go to `settings > pages` Under `Build and deployment` set `Source` to **GitHub Actions**.
