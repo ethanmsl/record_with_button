@@ -8,13 +8,6 @@ import typer
 from record_with_button import commands
 
 
-def test_what_am_i() -> None:
-    """Test: Say hello to NAME"""
-    assert commands.numeric_intake(2, 1) == 3
-    assert commands.numeric_intake(2, 0) == 2
-    assert commands.numeric_intake(1, 1) == 2
-
-
 def test_version_callback():
     """
     Test error and non-error exit
