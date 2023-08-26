@@ -4,17 +4,14 @@ to any other code and acting as the bridge to the user via
 the typer framework and decorators.
 """
 
-import time
 import tkinter as tk
 from importlib import metadata
-from typing import Optional
 
 import numpy as np
 import sounddevice as sd
 import typer
 import wavio
 from rich import print as rprint
-from rich.progress import Progress, SpinnerColumn, TextColumn, track
 from typing_extensions import Annotated
 
 from . import __name__ as APP_NAME
