@@ -18,6 +18,7 @@ typer = {extras = ["all"], version = "^0.7.0"}
 sounddevice = "^0.4.6"
 numpy = "^1.25.2"
 wavio = "^0.0.7"
+tk = "^0.1.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -702,6 +702,17 @@ CFFI = ">=1.0"
 numpy = ["NumPy"]
 
 [[package]]
+name = "tk"
+version = "0.1.0"
+description = "TensorKit is a deep learning helper between Python and C++."
+optional = false
+python-versions = "*"
+files = [
+    {file = "tk-0.1.0-py3-none-any.whl", hash = "sha256:703a69ff0d5ba2bd2f7440582ad10160e4a6561595d33457dc6caa79b9bf4930"},
+    {file = "tk-0.1.0.tar.gz", hash = "sha256:60bc8923d5d35f67f5c6bd93d4f0c49d2048114ec077768f959aef36d4ed97f8"},
+]
+
+[[package]]
 name = "tomlkit"
 version = "0.12.1"
 description = "Style preserving TOML library"
@@ -836,4 +847,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a9cf17e0523e0f1b4e99330b8be2279f3e7efc2eb0fc3ec0c2a0c0a013a6bceb"
+content-hash = "6a035e54a78361a9e31a9efc2806f5efb165a0f7f57949ff4685635301b56bd6"
